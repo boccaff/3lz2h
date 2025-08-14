@@ -49,7 +49,12 @@ int read_employees(int fd, struct dbheader_t *dbhdr, struct employee_t **employe
 		return STATUS_ERROR;
 	}
 
-	read(fd, employees, count * sizeof(struct employee_t));
+	int employee_data_size = count * sizeof(struct employee_t);
+	if (read(fd, employees, employee_data_size) != employee_data_size) {
+		printf("Employes not properly stored on file");
+		return STATUS_ERROR;
+
+	}
 
 	int i = 0;
 	for (;i < count; i++) {
