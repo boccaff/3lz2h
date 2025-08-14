@@ -100,7 +100,7 @@ int main(int argc, char *argv[]) {
 	output_file(dbfd, dbhdr, employees);
 
 
-	/*free(*employees);*/
+	free(employees);
 	return 0;
 	
 }
