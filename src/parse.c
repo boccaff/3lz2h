@@ -102,7 +102,6 @@ int validate_db_header(int fd, struct dbheader_t **headerOut) {
 
 	if (read(fd, header, sizeof(struct dbheader_t)) != sizeof(struct dbheader_t)) {
 		perror("read");
-		free(header);
 		return STATUS_ERROR;
 	}
 
