@@ -89,6 +89,11 @@ int main(int argc, char *argv[]) {
 		dbhdr->count++;
 
 		employees = realloc(employees, dbhdr->count * sizeof(struct employee_t));
+		if (employees == NULL){
+			dbhdr->count--;
+			printf("Failed to read employees\n");
+			return -1;
+		}
 
 		add_employee(dbhdr, employees, addstring);
 	}
@@ -100,7 +105,7 @@ int main(int argc, char *argv[]) {
 	output_file(dbfd, dbhdr, employees);
 
 
-	free(*employees);
+	free(employees);
 	return 0;
 	
 }
