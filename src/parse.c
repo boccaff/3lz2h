@@ -29,11 +29,13 @@ int add_employee(struct dbheader_t *dbhdr, struct employee_t **employeesptr, cha
 	dbhdr->count++;
 
 	struct employee_t *employees = realloc(*employeesptr, dbhdr->count * sizeof(struct employee_t));
+
 	if (employees == NULL){
 		dbhdr->count--;
-		printf("Failed to read employees\n");
+		printf("Failed to realocate memory for new employee\n");
 		return -1;
 	}
+	*employeesptr = employees;
 
 	char *name = strtok(addstring, ",");
 	char *addr = strtok(NULL, ",");
@@ -42,7 +44,6 @@ int add_employee(struct dbheader_t *dbhdr, struct employee_t **employeesptr, cha
 	strncpy(employees[dbhdr->count-1].name, name, sizeof(employees[dbhdr->count -1].name));
 	strncpy(employees[dbhdr->count-1].address, addr, sizeof(employees[dbhdr->count -1].address));
 	employees[dbhdr->count-1].hours = atoi(hours);
-	employeesptr* = employees;
 
 	return 0;
 }
@@ -56,7 +57,7 @@ int read_employees(int fd, struct dbheader_t *dbhdr, struct employee_t **employe
 	int count = dbhdr->count;
 	struct employee_t *employees = calloc(count, sizeof(struct employee_t));
 
-	if (employees == -1) {
+	if (employees == NULL) {
 		printf("Malloc failed to allocate for employees array\n");
 		return STATUS_ERROR;
 	}

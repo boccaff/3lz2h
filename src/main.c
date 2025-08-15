@@ -86,7 +86,7 @@ int main(int argc, char *argv[]) {
 
 
 	if (addstring) {
-		if (add_employee(dbhdr, employees, addstring) == -1){
+		if (add_employee(dbhdr, &employees, addstring) == -1){
 			printf("Failed to add employees\n");
 			return -1;
 		}
