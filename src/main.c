@@ -86,16 +86,10 @@ int main(int argc, char *argv[]) {
 
 
 	if (addstring) {
-		dbhdr->count++;
-
-		employees = realloc(employees, dbhdr->count * sizeof(struct employee_t));
-		if (employees == NULL){
-			dbhdr->count--;
-			printf("Failed to read employees\n");
+		if (add_employee(dbhdr, employees, addstring) == -1){
+			printf("Failed to add employees\n");
 			return -1;
 		}
-
-		add_employee(dbhdr, employees, addstring);
 	}
 
 	if (list) {

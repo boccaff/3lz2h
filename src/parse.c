@@ -24,7 +24,17 @@ void list_employees(struct dbheader_t *dbhdr, struct employee_t *employees) {
 	
 }
 
-int add_employee(struct dbheader_t *dbhdr, struct employee_t *employees, char *addstring) {
+int add_employee(struct dbheader_t *dbhdr, struct employee_t **employeesptr, char *addstring) {
+
+	dbhdr->count++;
+
+	struct employee_t *employees = realloc(*employeesptr, dbhdr->count * sizeof(struct employee_t));
+	if (employees == NULL){
+		dbhdr->count--;
+		printf("Failed to read employees\n");
+		return -1;
+	}
+
 	char *name = strtok(addstring, ",");
 	char *addr = strtok(NULL, ",");
 	char *hours = strtok(NULL, ",");
@@ -32,7 +42,9 @@ int add_employee(struct dbheader_t *dbhdr, struct employee_t *employees, char *a
 	strncpy(employees[dbhdr->count-1].name, name, sizeof(employees[dbhdr->count -1].name));
 	strncpy(employees[dbhdr->count-1].address, addr, sizeof(employees[dbhdr->count -1].address));
 	employees[dbhdr->count-1].hours = atoi(hours);
+	employeesptr* = employees;
 
+	return 0;
 }
 
 int read_employees(int fd, struct dbheader_t *dbhdr, struct employee_t **employeesOut) {
