@@ -35,7 +35,6 @@ int add_employee(struct dbheader_t *dbhdr, struct employee_t **employeesptr, cha
 		printf("Failed to realocate memory for new employee\n");
 		return -1;
 	}
-	*employeesptr = employees;
 
 	char *name = strtok(addstring, ",");
 	char *addr = strtok(NULL, ",");
@@ -44,6 +43,8 @@ int add_employee(struct dbheader_t *dbhdr, struct employee_t **employeesptr, cha
 	strncpy(employees[dbhdr->count-1].name, name, sizeof(employees[dbhdr->count -1].name));
 	strncpy(employees[dbhdr->count-1].address, addr, sizeof(employees[dbhdr->count -1].address));
 	employees[dbhdr->count-1].hours = atoi(hours);
+
+	*employeesptr = employees;
 
 	return 0;
 }
